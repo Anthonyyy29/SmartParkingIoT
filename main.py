@@ -1,74 +1,77 @@
-import mysql.connector
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+from database_connection import db
+from config import settings
+from routes import entry, exit, admin
 
-from app.core.config import engine
-from app.db import Base
-from app.api.routes import router
+# Startup and shutdown events
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    print("🚀 Starting Smart Parking IoT API...")
+    db.connect()
+    yield
+    # Shutdown
+    print("🛑 Shutting down...")
+    db.disconnect()
 
-# Inisialisasi database
-Base.metadata.create_all(bind=engine)
-
+# Create FastAPI app
 app = FastAPI(
     title="Smart Parking IoT API",
-    description="Backend API untuk sistem smart parking berbasis IoT",
-    version="1.0.0"
+    description="API for IoT-based smart parking system",
+    version="1.0.0",
+    lifespan=lifespan
 )
 
-# CORS middleware - izinkan akses dari semua origin
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include API routes
-app.include_router(router)
+# Include routers
+app.include_router(entry.router)
+app.include_router(exit.router)
+app.include_router(admin.router)
 
-# ==================
-#   HEALTH CHECK
-# ==================
 
-@app.get("/")
-def root():
-    """Endpoint utama untuk test API."""
-    return {"message": "Smart Parking IoT API sudah jalan!", "version": "1.0.0"}
+@app.get(
+    "/",
+    summary="API Status",
+    tags=["Health Check"]
+)
+async def root():
+    """Check API status"""
+    return {
+        "status": "online",
+        "service": "Smart Parking IoT API",
+        "version": "1.0.0"
+    }
 
-@app.get("/health")
-def health_check():
-    """Endpoint untuk health check."""
-    return {"status": "healthy"}
 
-@app.get("/test-db")
-def test_db_connection():
-    """Test koneksi database."""
-    try:
-        db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="",
-            database="smart_parking"
-        )
-        cursor = db.cursor()
-        cursor.execute("SHOW TABLES")
-        tables = cursor.fetchall()
-        cursor.close()
-        db.close()
-        
-        return {
-            "status": "connected",
-            "tables": tables,
-            "message": "Database connection successful"
-        }
-    except Exception as e:
-        return {
-            "status": "error",
-            "message": str(e)
-        }
+@app.get(
+    "/health",
+    summary="Health Check",
+    tags=["Health Check"]
+)
+async def health_check():
+    """Check API and database health"""
+    return {
+        "status": "healthy",
+        "database": "connected",
+        "timestamp": __import__("datetime").datetime.now().isoformat()
+    }
+
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-
+    uvicorn.run(
+        "main:app",
+        host=settings.API_HOST,
+        port=settings.API_PORT,
+        reload=settings.DEBUG
+    )

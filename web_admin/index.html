@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Parking Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>🅿️ Smart Parking Admin Dashboard</h1>
+        <p class="subtitle">Real-time Parking Status Monitor</p>
+      </header>
+
+      <div class="status-section">
+        <div class="status-card">
+          <div class="status-value" id="activeVehiclesCount">0</div>
+          <div class="status-label">Active Vehicles</div>
+        </div>
+        <div class="status-card">
+          <div class="status-value" id="totalRevenueToday">Rp 0</div>
+          <div class="status-label">Revenue Today</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="refreshBtn" class="btn btn-primary">🔄 Refresh</button>
+        <button id="autoRefreshToggle" class="btn btn-secondary">
+          Auto Refresh: OFF
+        </button>
+        <span class="update-time"
+          >Last updated: <span id="lastUpdateTime">-</span></span
+        >
+      </div>
+
+      <div class="table-container">
+        <h2>Currently Parked Vehicles</h2>
+        <table id="vehiclesTable" class="table">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>UID / RFID</th>
+              <th>Entry Time</th>
+              <th>Duration (minutes)</th>
+              <th>Current Fee (Rp)</th>
+            </tr>
+          </thead>
+          <tbody id="vehiclesTableBody">
+            <tr>
+              <td colspan="5" class="empty-message">Loading data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-section">
+        <h3>Parking Rate Information</h3>
+        <div class="rate-info">
+          <p><strong>First 60 minutes:</strong> Rp 5.000</p>
+          <p><strong>Each additional hour:</strong> Rp 2.000</p>
+          <p class="example">Examples:</p>
+          <ul>
+            <li>45 minutes = Rp 5.000</li>
+            <li>75 minutes = Rp 7.000</li>
+            <li>150 minutes = Rp 9.000</li>
+          </ul>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>
+          Smart Parking IoT System v1.0 | Last sync:
+          <span id="footerTime">-</span>
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

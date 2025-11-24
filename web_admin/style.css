@@ -1,0 +1,254 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+}
+
+header.header .subtitle {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+.status-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 30px;
+    background: #f8f9fa;
+}
+
+.status-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.status-label {
+    font-size: 1em;
+    color: #666;
+    font-weight: 500;
+}
+
+.controls {
+    padding: 20px 30px;
+    background: #fff;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #e0e0e0;
+}
+
+.btn-secondary.active {
+    background: #4caf50;
+    color: white;
+}
+
+.update-time {
+    margin-left: auto;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.table-container {
+    padding: 30px;
+}
+
+.table-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5em;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.table thead {
+    background: #667eea;
+    color: white;
+}
+
+.table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #667eea;
+}
+
+.table td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.table tbody tr {
+    transition: background 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background: #f8f9ff;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.empty-message {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+.info-section {
+    padding: 30px;
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+}
+
+.info-section h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.rate-info {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.rate-info p {
+    margin: 10px 0;
+    color: #555;
+}
+
+.rate-info .example {
+    font-weight: 600;
+    color: #333;
+    margin-top: 15px;
+}
+
+.rate-info ul {
+    margin: 10px 0 0 20px;
+    color: #555;
+}
+
+.rate-info li {
+    margin: 5px 0;
+}
+
+footer.footer {
+    background: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+    color: #999;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header.header h1 {
+        font-size: 1.8em;
+    }
+
+    .status-section {
+        grid-template-columns: 1fr;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .update-time {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .table {
+        font-size: 0.9em;
+    }
+
+    .table th, .table td {
+        padding: 10px;
+    }
+}
+
+/* Loading animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading {
+    animation: spin 1s linear infinite;
+}
